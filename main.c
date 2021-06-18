@@ -75,20 +75,35 @@ void print_linked_list(struct LinkedList* list) {
 	printf("%d\n", tmp->data);
 }
 
+void init_linked_list(struct LinkedList* list) {
+	list->head = NULL;
+}
+
 int main(void) {
     struct Node* one = get_node(1);
     struct Node* two = get_node(2);
     struct Node* thr = get_node(3);
 
-    struct LinkedList nums;
+    struct LinkedList nums; // nums.head
 
-    nums.head = one;
+	init_linked_list(&nums); // nums.head === NULL
 
-	insert_at_head(&nums, two);
-	insert_at_head(&nums, thr);
+	insert_at_head(&nums, get_node(78));
+	print_linked_list(&nums);
+	remove_at_tail(&nums);
 
-	for (int i = 4; i <= 10; i++)
+	insert_at_tail(&nums, get_node(87));
+	print_linked_list(&nums);
+	remove_at_head(&nums);
+
+	for (int i = 1; i <= 5; i++)
 		insert_at_tail(&nums, get_node(i));
+
+	for (int i = 6; i <= 10; i++)
+		insert_at_head(&nums, get_node(i));
+
+	remove_at_head(&nums);
+	remove_at_tail(&nums);
 
 	print_linked_list(&nums);
 
