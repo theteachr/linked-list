@@ -25,13 +25,44 @@ void insert_at_head(struct LinkedList* list, struct Node* node) {
 	list->head = node;
 }
 
-
 void insert_at_tail(struct LinkedList* list, struct Node* node) {
 	struct Node* tmp;
+
+	if (list->head == NULL) {
+		list->head = node;
+		return;
+	}
 
 	for (tmp = list->head; tmp->next != NULL; tmp = tmp->next);
 
 	tmp->next = node;
+}
+
+void remove_at_head(struct LinkedList* list) {
+	if (list->head == NULL)
+		return;
+
+	list->head = list->head->next;
+}
+
+void remove_at_tail(struct LinkedList* list) {
+	struct Node* prev = NULL;
+	struct Node* curr = list->head;
+
+	if (curr == NULL)
+		return;
+
+	if (curr->next == NULL) {
+		list->head = NULL;
+		free(curr);
+		return;
+	}
+
+	for (; curr->next != NULL; curr = curr->next)
+		prev = curr;
+
+	prev->next = NULL;
+	free(curr);
 }
 
 void print_linked_list(struct LinkedList* list) {
