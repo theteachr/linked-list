@@ -19,44 +19,38 @@ struct Node* get_node(int val) {
     return new_node;
 }
 
+int is_empty(struct LinkedList* list) {
+	return list->head->next == NULL;
+}
+
 void insert_at_head(struct LinkedList* list, struct Node* node) {
-	// 1 -> 2 -> 3 : 4 ==== 4 -> 1 -> 2 -> 3
-	node->next = list->head;
-	list->head = node;
+	node->next = list->head->next;
+	list->head->next = node;
 }
 
 void insert_at_tail(struct LinkedList* list, struct Node* node) {
 	struct Node* tmp;
 
-	if (list->head == NULL) {
-		list->head = node;
-		return;
-	}
-
 	for (tmp = list->head; tmp->next != NULL; tmp = tmp->next);
-
 	tmp->next = node;
 }
 
 void remove_at_head(struct LinkedList* list) {
-	if (list->head == NULL)
+	struct Node* tmp = list->head->next;
+
+	if (is_empty(list))
 		return;
 
-	list->head = list->head->next;
+	list->head->next = list->head->next->next;
+	free(tmp);
 }
 
 void remove_at_tail(struct LinkedList* list) {
-	struct Node* prev = NULL;
+	struct Node* prev = list->head;
 	struct Node* curr = list->head;
 
-	if (curr == NULL)
+	if (is_empty(list))
 		return;
-
-	if (curr->next == NULL) {
-		list->head = NULL;
-		free(curr);
-		return;
-	}
 
 	for (; curr->next != NULL; curr = curr->next)
 		prev = curr;
@@ -68,7 +62,12 @@ void remove_at_tail(struct LinkedList* list) {
 void print_linked_list(struct LinkedList* list) {
 	struct Node* tmp;
 
-    for (tmp = list->head; tmp->next != NULL; tmp = tmp->next) {
+	if (is_empty(list)) {
+		printf("List is empty.\n");
+		return;
+	}
+
+    for (tmp = list->head->next; tmp->next != NULL; tmp = tmp->next) {
         printf("%d -> ", tmp->data);
     }
 
@@ -76,7 +75,7 @@ void print_linked_list(struct LinkedList* list) {
 }
 
 void init_linked_list(struct LinkedList* list) {
-	list->head = NULL;
+	list->head = get_node(0);
 }
 
 int main(void) {
@@ -84,13 +83,15 @@ int main(void) {
     struct Node* two = get_node(2);
     struct Node* thr = get_node(3);
 
-    struct LinkedList nums; // nums.head
+    struct LinkedList nums;
 
-	init_linked_list(&nums); // nums.head === NULL
+	init_linked_list(&nums);
 
 	insert_at_head(&nums, get_node(78));
 	print_linked_list(&nums);
 	remove_at_tail(&nums);
+
+	print_linked_list(&nums);
 
 	insert_at_tail(&nums, get_node(87));
 	print_linked_list(&nums);
@@ -98,9 +99,11 @@ int main(void) {
 
 	for (int i = 1; i <= 5; i++)
 		insert_at_tail(&nums, get_node(i));
+	print_linked_list(&nums);
 
 	for (int i = 6; i <= 10; i++)
 		insert_at_head(&nums, get_node(i));
+	print_linked_list(&nums);
 
 	remove_at_head(&nums);
 	remove_at_tail(&nums);
