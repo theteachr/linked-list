@@ -2,21 +2,21 @@
 #include <stdlib.h>
 
 struct Node {
-    int data;
-    struct Node* next;
+	int data;
+	struct Node* next;
 };
 
 struct LinkedList {
-    struct Node *head;
+	struct Node *head;
 };
 
 struct Node* get_node(int val) {
-    struct Node* new_node = malloc(sizeof(struct Node));
+	struct Node* new_node = malloc(sizeof(struct Node));
 
-    new_node->data = val;
-    new_node->next = NULL;
+	new_node->data = val;
+	new_node->next = NULL;
 
-    return new_node;
+	return new_node;
 }
 
 int is_empty(struct LinkedList* list) {
@@ -67,9 +67,9 @@ void print_linked_list(struct LinkedList* list) {
 		return;
 	}
 
-    for (tmp = list->head->next; tmp->next != NULL; tmp = tmp->next) {
-        printf("%d -> ", tmp->data);
-    }
+	for (tmp = list->head->next; tmp->next != NULL; tmp = tmp->next) {
+		printf("%d -> ", tmp->data);
+	}
 
 	printf("%d\n", tmp->data);
 }
@@ -79,11 +79,11 @@ void init_linked_list(struct LinkedList* list) {
 }
 
 int main(void) {
-    struct Node* one = get_node(1);
-    struct Node* two = get_node(2);
-    struct Node* thr = get_node(3);
+	struct Node* one = get_node(1);
+	struct Node* two = get_node(2);
+	struct Node* thr = get_node(3);
 
-    struct LinkedList nums;
+	struct LinkedList nums;
 
 	init_linked_list(&nums);
 
@@ -110,5 +110,5 @@ int main(void) {
 
 	print_linked_list(&nums);
 
-    return 0;
+	return 0;
 }
