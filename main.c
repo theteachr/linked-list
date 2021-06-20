@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include "linked_list.h"
+#include "src/linked_list.h"
 
 int main(void) {
 	struct LinkedList nums;
 
 	init_linked_list(&nums);
 
-	insert_at_head(&nums, get_node(3));
+	insert_at_head(&nums, get_node(31));
 	print_linked_list(&nums);
 	remove_at_tail(&nums);
 
